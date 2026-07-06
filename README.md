@@ -102,3 +102,16 @@ app.get('/', function(req, res){
 })
 ```
 <img width="632" height="311" alt="Screenshot 2026-07-06 at 12 39 56 PM" src="https://github.com/user-attachments/assets/be240674-1cf5-4b60-abe7-2c3799f72296" />
+
+### EJS Syntax
+
+to use javascript in an ejs file, I need a script tag
+```ejs
+<% let user = 'abdullah' %>
+```
+
+To display javascript values from an ejs file, I need an outpt tag:
+```ejs
+<%=user %>
+```
+
