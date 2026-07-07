@@ -38,7 +38,7 @@ const app = express()
 app.use(morgan('dev'))
 
 app.listen(3000, function(){
-console.log('Listening on port 3000 💛')
+    console.log('Listening on port 3000 💛')
 })
 ```
 
@@ -53,7 +53,7 @@ Use `ctrl + c` to stop the server in the terminal.
 
 ```js
 app.get('/test', function(req, res) {
-res.send('this is a test ✨')
+    res.send('this is a test ✨')
 })
 ```
 <img width="330" height="145" alt="Screenshot 2026-07-05 at 12 30 29 PM" src="https://github.com/user-attachments/assets/5afaaa31-7117-4e82-99cf-79316aed6b9a" />
@@ -64,8 +64,8 @@ Navigate to `http://localhost:3000/test`
 
 ```js
 app.get('/:userId', function(req, res){
-res.send(`Hello user number:${req.params.userId}`)
-console.log(req.params.userId)
+    res.send(`Hello user number:${req.params.userId}`)
+    console.log(req.params.userId)
 })
 ```
 Navigate to `http://localhost:3000/2490`
@@ -105,13 +105,74 @@ app.get('/', function(req, res){
 
 ### EJS Syntax
 
-to use javascript in an ejs file, I need a script tag
+To use javaScript in an ejs file, I need a scriplet tag:
 ```ejs
-<% let user = 'abdullah' %>
+<% let user = 'nabila' %>
 ```
 
-To display javascript values from an ejs file, I need an outpt tag:
+To display javaScript values from an ejs file, I need an output tag:
 ```ejs
-<%=user %>
+<%= user %>
 ```
 
+### Pass data from the controller
+
+Use the locals object inside the render method:
+```js
+res.render('home.ejs', {
+    title: 'Home Page',
+})
+```
+Now I can use the `title` variable in my `home.ejs` file.
+
+home.ejs
+```ejs
+<h1><%= title %></h1>
+```
+
+### Using `forEach` in `ejs`
+
+```ejs
+<ul>
+    <% inventory.forEach(function(item){ %>
+    <li><%= item.name %></li>
+    <% }) %>
+</ul>
+```
+<img width="597" height="313" alt="Screenshot 2026-07-06 at 2 59 14 PM" src="https://github.com/user-attachments/assets/9b8c861c-680d-456b-98fd-b5a0522a9af1" />
+
+### Creating dynamic links to a `show` page
+
+`item.name` is dynamically showing up.  The link is also dynamically changing with the item. (see `forEach` above)
+```ejs
+<a href="/<%= item.id %>"> <%= item.name %> </a>
+```
+We should see the URL change in the browser.
+
+### Reusale
+create a folder called `partials` inside of `views`
+create a dile called `nav.ejs` inside of `partial`
+
+### Adding CSS & images with `public`
+- Create a folder called `public`
+- Create a folder called `stylesheets` inside of `public`
+- Create a file called `style.css` inside of `stylesheets`
+
+Configure our server to look inside of the `public` folder for static files:
+```js
+// require the path from node at the top
+const path = require('path')
+
+// use static middleware with other middlware like morgan
+app.use(express.static(path.join(__dirname, "public")))
+```
+
+- Link the stylesheet in the head of our `html` files (inside `nav` partial if we're using partials)
+```ejs
+<link rel="stylesheet" href="/stylesheets/style.css">
+```
+
+#### Images
+
+- Create an `images` folder inside of our `public` folder
+- Link to images like normal:
